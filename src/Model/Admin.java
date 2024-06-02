@@ -10,7 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -101,7 +102,7 @@ public class Admin extends User {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(new Color(236, 240, 241));
 
-		// Adding summary data
+		// Adding summary data with cards
 		JPanel summaryPanel = new JPanel(new GridBagLayout());
 		summaryPanel.setBackground(new Color(236, 240, 241));
 		summaryPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -109,33 +110,34 @@ public class Admin extends User {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 10, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.BOTH;
 
-		JLabel totalPSUnits = createSummaryLabel("Total PS Units: " + database.getTotalPSUnits());
+		JPanel totalPSUnitsCard = createSummaryCard("Total PS Units", String.valueOf(database.getTotalPSUnits()));
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		summaryPanel.add(totalPSUnits, gbc);
+		summaryPanel.add(totalPSUnitsCard, gbc);
 
-		JLabel totalUsers = createSummaryLabel("Total Users: " + database.getTotalUsers());
+		JPanel totalUsersCard = createSummaryCard("Total Users", String.valueOf(database.getTotalUsers()));
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		summaryPanel.add(totalUsersCard, gbc);
+
+		JPanel totalRentsCard = createSummaryCard("Total Rents", String.valueOf(database.getTotalRents()));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		summaryPanel.add(totalUsers, gbc);
+		summaryPanel.add(totalRentsCard, gbc);
 
-		JLabel totalRents = createSummaryLabel("Total Rents: " + database.getTotalRents());
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		summaryPanel.add(totalRents, gbc);
-
-		JLabel recentActivity = createSummaryLabel("Recent Activity: " + database.getRecentActivity());
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		summaryPanel.add(recentActivity, gbc);
+		JPanel totalEarningsCard = createSummaryCard("Total Earnings", formatCurrency(database.getTotalEarnings()));
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		summaryPanel.add(totalEarningsCard, gbc);
 
 		mainPanel.add(summaryPanel, BorderLayout.CENTER);
 
 		// Footer
 		JPanel footer = new JPanel();
 		footer.setBackground(new Color(44, 62, 80));
-		JLabel footerText = new JLabel("Admin Dashboard © 2024", JLabel.CENTER);
+		JLabel footerText = new JLabel("Kelompok 3 - Pemrograman Berorientasi Objek © 2024", JLabel.CENTER);
 		footerText.setForeground(Color.WHITE);
 		footerText.setFont(new Font("Arial", Font.PLAIN, 12));
 		footer.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -149,10 +151,30 @@ public class Admin extends User {
 		frame.setVisible(true);
 	}
 
-	private JLabel createSummaryLabel(String text) {
-		JLabel label = new JLabel(text);
-		label.setFont(new Font("Arial", Font.BOLD, 18));
-		label.setForeground(new Color(44, 62, 80));
-		return label;
+	private String formatCurrency(double amount) {
+		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+		return currencyFormatter.format(amount);
+	}
+
+	private JPanel createSummaryCard(String title, String value) {
+		JPanel card = new JPanel(new BorderLayout());
+		card.setBackground(Color.WHITE);
+		card.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
+				BorderFactory.createEmptyBorder(20, 20, 20, 20)));
+
+		JLabel titleLabel = new JLabel(title);
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		titleLabel.setForeground(new Color(44, 62, 80));
+
+		JLabel valueLabel = new JLabel(value);
+		valueLabel.setFont(new Font("Arial", Font.BOLD, 36));
+		valueLabel.setForeground(new Color(41, 128, 185));
+		valueLabel.setHorizontalAlignment(JLabel.CENTER);
+
+		card.add(titleLabel, BorderLayout.NORTH);
+		card.add(valueLabel, BorderLayout.CENTER);
+
+		return card;
 	}
 }

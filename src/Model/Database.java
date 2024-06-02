@@ -62,16 +62,18 @@ public class Database {
 		return 0;
 	}
 
-	public String getRecentActivity() {
+	public double getTotalEarnings() {
+		double totalEarnings = 0.0;
 		try {
 			ResultSet resultSet = statement
-					.executeQuery("SELECT action FROM activities ORDER BY timestamp DESC LIMIT 1");
+					.executeQuery("SELECT SUM(Total) AS totalEarned FROM rents WHERE Status = 1");
 			if (resultSet.next()) {
-				return resultSet.getString("action");
+				totalEarnings = resultSet.getDouble("totalEarned");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "No recent activities.";
+		return totalEarnings;
 	}
+
 }
