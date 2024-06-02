@@ -17,12 +17,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import Model.Admin;
 import Model.Client;
 import Model.Database;
-import Model.JButton;
-import Model.JLabel;
 import Model.JPasswordField;
 import Model.JTextField;
 import Model.User;
@@ -43,12 +43,12 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel("WELCOME TO RENTAL PS GDA", 35);
+		JLabel title = new JLabel("WELCOME TO RENTAL PS GDA", JLabel.CENTER);
+		title.setFont(title.getFont().deriveFont(35f));
 		title.setForeground(Color.BLUE);
 		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		frame.add(title, BorderLayout.NORTH);
 
-		// Panel dengan latar belakang gradasi
 		JPanel gradientPanel = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -69,27 +69,21 @@ public class Main {
 		panel.setOpaque(false);
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-		JLabel emailLabel = new JLabel("Email:", 22);
-		emailLabel.setForeground(Color.BLACK);
-		panel.add(emailLabel);
+		addStyledLabel(panel, "Email:");
 
 		JTextField email = new JTextField(22);
 		email.setForeground(Color.BLACK);
 		email.setBackground(Color.LIGHT_GRAY);
 		panel.add(email);
 
-		JLabel passwordLabel = new JLabel("Password:", 22);
-		passwordLabel.setForeground(Color.BLACK);
-		panel.add(passwordLabel);
+		addStyledLabel(panel, "Password:");
 
 		JPasswordField password = new JPasswordField(22);
 		password.setForeground(Color.BLACK);
 		password.setBackground(Color.LIGHT_GRAY);
 		panel.add(password);
 
-		JButton createAcc = new JButton("Create New Account", 22);
-		createAcc.setBackground(Color.GREEN);
-		createAcc.setForeground(Color.WHITE);
+		JButton createAcc = createStyledButton("Create New Account", Color.GREEN, Color.WHITE);
 		createAcc.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -137,9 +131,7 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		JButton login = new JButton("Login", 22);
-		login.setBackground(Color.BLUE);
-		login.setForeground(Color.WHITE);
+		JButton login = createStyledButton("Login", Color.BLUE, Color.WHITE);
 		login.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -177,7 +169,7 @@ public class Main {
 		// Memuat gambar dan menambahkannya ke label
 		ClassLoader classLoader = Main.class.getClassLoader();
 		ImageIcon imageIcon = new ImageIcon(classLoader.getResource("resources/lumba.png"));
-		javax.swing.JLabel imageLabel = new javax.swing.JLabel(imageIcon); // Pastikan menggunakan javax.swing.JLabel
+		javax.swing.JLabel imageLabel = new javax.swing.JLabel(imageIcon);
 
 		// Menambahkan label gambar ke panel utama di sisi kanan
 		mainPanel.add(imageLabel, BorderLayout.EAST);
@@ -189,5 +181,23 @@ public class Main {
 		frame.add(gradientPanel, BorderLayout.CENTER);
 
 		frame.setVisible(true);
+	}
+
+	private static void addStyledLabel(JPanel panel, String text) {
+		JLabel label = new JLabel(text);
+		label.setFont(label.getFont().deriveFont(18f));
+		label.setForeground(new Color(44, 62, 80));
+		label.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+		panel.add(label);
+	}
+
+	private static JButton createStyledButton(String text, Color background, Color foreground) {
+		JButton button = new JButton(text);
+		button.setFont(button.getFont().deriveFont(22f));
+		button.setBackground(background);
+		button.setForeground(foreground);
+		button.setFocusPainted(false);
+		button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		return button;
 	}
 }

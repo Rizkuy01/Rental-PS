@@ -2,6 +2,7 @@ package Controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,10 +12,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import Model.Database;
-import Model.JButton;
-import Model.JLabel;
 import Model.JTextField;
 import Model.Operation;
 import Model.User;
@@ -23,46 +24,51 @@ public class EditUserData implements Operation {
 
 	@Override
 	public void operation(Database database, JFrame f, User user) {
-		
+
 		JFrame frame = new JFrame("Edit Data");
 		frame.setSize(600, 450);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.getContentPane().setBackground(new Color(236, 240, 241));
 		frame.setLayout(new BorderLayout());
-		
-		JLabel title = new JLabel("Edit Data", 35);
+
+		JLabel title = new JLabel("Edit Data", JLabel.CENTER);
+		title.setForeground(new Color(44, 62, 80));
+		title.setFont(new Font("Arial", Font.BOLD, 30));
 		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		frame.add(title, BorderLayout.NORTH);
-		
+
 		JPanel panel = new JPanel(new GridLayout(5, 2, 15, 15));
-		panel.setBackground(null);
+		panel.setBackground(new Color(236, 240, 241));
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		
-		panel.add(new JLabel("First Name:", 22));
-		
+
+		panel.add(createLabel("First Name:"));
+
 		JTextField firstName = new JTextField(22);
 		firstName.setText(user.getFirstName());
 		panel.add(firstName);
-		
-		panel.add(new JLabel("Last Name:", 22));
-		
+
+		panel.add(createLabel("Last Name:"));
+
 		JTextField lastName = new JTextField(22);
 		lastName.setText(user.getLastName());
 		panel.add(lastName);
-		
-		panel.add(new JLabel("Email:", 22));
-		
+
+		panel.add(createLabel("Email:"));
+
 		JTextField email = new JTextField(22);
 		email.setText(user.getEmail());
 		panel.add(email);
-		
-		panel.add(new JLabel("Phone Number:", 22));
-		
+
+		panel.add(createLabel("Phone Number:"));
+
 		JTextField phoneNumber = new JTextField(22);
 		phoneNumber.setText(user.getPhoneNumber());
 		panel.add(phoneNumber);
-		
-		JButton cancel = new JButton("Cancel", 22);
+
+		JButton cancel = new JButton("Cancel");
+		cancel.setBackground(new Color(192, 57, 43));
+		cancel.setForeground(Color.WHITE);
+		cancel.setFont(new Font("Arial", Font.BOLD, 16));
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -70,12 +76,16 @@ public class EditUserData implements Operation {
 			}
 		});
 		panel.add(cancel);
-		
-		JButton confirm = new JButton("Confirm", 22);
-		confirm.addActionListener(new ActionListener() {	
+
+		JButton confirm = new JButton("Confirm");
+		confirm.setBackground(new Color(39, 174, 96));
+		confirm.setForeground(Color.WHITE);
+		confirm.setFont(new Font("Arial", Font.BOLD, 16));
+		confirm.setFocusPainted(false);
+		confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ev) {
-				
+
 				if (firstName.getText().equals("")) {
 					JOptionPane.showMessageDialog(frame, "First Name cannot be empty");
 					return;
@@ -92,12 +102,12 @@ public class EditUserData implements Operation {
 					JOptionPane.showMessageDialog(frame, "Phone Number cannot be empty");
 					return;
 				}
-				
-				String update = "UPDATE `users` SET `FirstName`='"+firstName.getText()+"',"
-				+ "`LastName`='"+lastName.getText()+"',`Email`='"+email.getText()+"',"
-						+ "`PhoneNumber`='"+phoneNumber.getText()+"' "
-								+ "WHERE `ID` = '"+user.getID()+"';";
-		
+
+				String update = "UPDATE `users` SET `FirstName`='" + firstName.getText() + "',"
+						+ "`LastName`='" + lastName.getText() + "',`Email`='" + email.getText() + "',"
+						+ "`PhoneNumber`='" + phoneNumber.getText() + "' "
+						+ "WHERE `ID` = '" + user.getID() + "';";
+
 				try {
 					database.getStatement().execute(update);
 					JOptionPane.showMessageDialog(frame, "Data updated successfully");
@@ -112,10 +122,16 @@ public class EditUserData implements Operation {
 			}
 		});
 		panel.add(confirm);
-		
+
 		frame.add(panel, BorderLayout.CENTER);
 		frame.setVisible(true);
-		
+
 	}
 
+	private JLabel createLabel(String text) {
+		JLabel label = new JLabel(text);
+		label.setForeground(new Color(44, 62, 80));
+		label.setFont(new Font("Arial", Font.BOLD, 18));
+		return label;
+	}
 }

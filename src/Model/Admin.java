@@ -2,13 +2,21 @@ package Model;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 import Controller.AddNewAccount;
 import Controller.AddNewps;
@@ -31,18 +39,19 @@ public class Admin extends User {
 			new ShowAllRents(),
 			new ShowSpecUserRents(),
 			new EditUserData(),
-			new ChangePassword() };
+			new ChangePassword()
+	};
 
 	private JButton[] btns = new JButton[] {
-			new JButton("Add New PS Unit", 22),
-			new JButton("View PS", 22),
-			new JButton("Update PS", 22),
-			new JButton("Delete PS", 22),
-			new JButton("Add New Admin", 22),
-			new JButton("Show Rents", 22),
-			new JButton("Show User's Rents", 22),
-			new JButton("Edit my Data", 22),
-			new JButton("Change Password", 22)
+			new JButton("Add New PS Unit", new ImageIcon("icons/add.png")),
+			new JButton("View PS", new ImageIcon("icons/view.png")),
+			new JButton("Update PS", new ImageIcon("icons/update.png")),
+			new JButton("Delete PS", new ImageIcon("icons/delete.png")),
+			new JButton("Add New Admin", new ImageIcon("icons/add_admin.png")),
+			new JButton("Show Rents", new ImageIcon("icons/show_rents.png")),
+			new JButton("Show User's Rents", new ImageIcon("icons/show_user_rents.png")),
+			new JButton("Edit my Data", new ImageIcon("icons/edit.png")),
+			new JButton("Change Password", new ImageIcon("icons/change_password.png"))
 	};
 
 	public Admin() {
@@ -51,25 +60,35 @@ public class Admin extends User {
 
 	@Override
 	public void showList(Database database, JFrame f) {
-
-		JFrame frame = new JFrame("Admin Panel");
-		frame.setSize(400, btns.length * 80);
+		JFrame frame = new JFrame("Admin Dashboard");
+		frame.setSize(1000, 700);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel("Welcome " + getFirstName(), 30);
-		title.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
-		frame.add(title, BorderLayout.NORTH);
+		// Header
+		JPanel header = new JPanel(new BorderLayout());
+		header.setBackground(new Color(44, 62, 80));
+		JLabel title = new JLabel("Welcome " + getFirstName(), JLabel.CENTER);
+		title.setForeground(Color.WHITE);
+		title.setFont(new Font("Arial", Font.BOLD, 30));
+		header.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+		header.add(title, BorderLayout.CENTER);
 
-		JPanel panel = new JPanel(new GridLayout(btns.length, 1, 15, 15));
-		panel.setBackground(null);
-		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		// Side Menu
+		JPanel sideMenu = new JPanel(new GridLayout(btns.length, 1, 10, 10));
+		sideMenu.setBackground(new Color(52, 73, 94));
+		sideMenu.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 		for (int i = 0; i < btns.length; i++) {
 			final int j = i;
 			JButton button = btns[i];
-			panel.add(button);
+			button.setBackground(new Color(41, 128, 185));
+			button.setForeground(Color.WHITE);
+			button.setFocusPainted(false);
+			button.setFont(new Font("Arial", Font.BOLD, 16));
+			button.setPreferredSize(new Dimension(200, 40));
+			sideMenu.add(button);
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -78,8 +97,62 @@ public class Admin extends User {
 			});
 		}
 
-		frame.add(panel, BorderLayout.CENTER);
+		// Main Panel
+		JPanel mainPanel = new JPanel(new BorderLayout());
+		mainPanel.setBackground(new Color(236, 240, 241));
+
+		// Adding summary data
+		JPanel summaryPanel = new JPanel(new GridBagLayout());
+		summaryPanel.setBackground(new Color(236, 240, 241));
+		summaryPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.anchor = GridBagConstraints.WEST;
+
+		JLabel totalPSUnits = createSummaryLabel("Total PS Units: " + database.getTotalPSUnits());
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		summaryPanel.add(totalPSUnits, gbc);
+
+		JLabel totalUsers = createSummaryLabel("Total Users: " + database.getTotalUsers());
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		summaryPanel.add(totalUsers, gbc);
+
+		JLabel totalRents = createSummaryLabel("Total Rents: " + database.getTotalRents());
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		summaryPanel.add(totalRents, gbc);
+
+		JLabel recentActivity = createSummaryLabel("Recent Activity: " + database.getRecentActivity());
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		summaryPanel.add(recentActivity, gbc);
+
+		mainPanel.add(summaryPanel, BorderLayout.CENTER);
+
+		// Footer
+		JPanel footer = new JPanel();
+		footer.setBackground(new Color(44, 62, 80));
+		JLabel footerText = new JLabel("Admin Dashboard © 2024", JLabel.CENTER);
+		footerText.setForeground(Color.WHITE);
+		footerText.setFont(new Font("Arial", Font.PLAIN, 12));
+		footer.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+		footer.add(footerText);
+
+		frame.add(header, BorderLayout.NORTH);
+		frame.add(sideMenu, BorderLayout.WEST);
+		frame.add(mainPanel, BorderLayout.CENTER);
+		frame.add(footer, BorderLayout.SOUTH);
+
 		frame.setVisible(true);
 	}
 
+	private JLabel createSummaryLabel(String text) {
+		JLabel label = new JLabel(text);
+		label.setFont(new Font("Arial", Font.BOLD, 18));
+		label.setForeground(new Color(44, 62, 80));
+		return label;
+	}
 }

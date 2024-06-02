@@ -2,6 +2,7 @@ package Controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,10 +12,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import Model.Database;
-import Model.JButton;
-import Model.JLabel;
 import Model.JPasswordField;
 import Model.Operation;
 import Model.User;
@@ -23,37 +24,43 @@ public class ChangePassword implements Operation {
 
 	@Override
 	public void operation(Database database, JFrame f, User user) {
-		
+
 		JFrame frame = new JFrame("Change Password");
 		frame.setSize(600, 380);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.getContentPane().setBackground(new Color(236, 240, 241));
 		frame.setLayout(new BorderLayout());
-		
-		JLabel title = new JLabel("Change Password", 35);
+
+		JLabel title = new JLabel("Change Password", JLabel.CENTER);
+		title.setBackground(new Color(44, 62, 80));
+		title.setFont(new Font("Arial", Font.BOLD, 30));
 		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		frame.add(title, BorderLayout.NORTH);
-		
+
 		JPanel panel = new JPanel(new GridLayout(4, 2, 15, 15));
-		panel.setBackground(null);
+		panel.setBackground(new Color(236, 240, 241));
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		
-		panel.add(new JLabel("Old Password:", 22));
-		
+
+		panel.add(createLabel("Old Password:"));
+
 		JPasswordField oldPassword = new JPasswordField(22);
 		panel.add(oldPassword);
-		
-		panel.add(new JLabel("New Password:", 22));
-		
+
+		panel.add(createLabel("New Password:"));
+
 		JPasswordField newPassword = new JPasswordField(22);
 		panel.add(newPassword);
-		
-		panel.add(new JLabel("Confirm Password:", 22));
-		
+
+		panel.add(createLabel("Confirm Password:"));
+
 		JPasswordField confirmPassword = new JPasswordField(22);
 		panel.add(confirmPassword);
-		
-		JButton cancel = new JButton("Cancel", 22);
+
+		JButton cancel = new JButton("Cancel");
+		cancel.setBackground(new Color(192, 57, 43));
+		cancel.setForeground(Color.WHITE);
+		cancel.setFont(new Font("Arial", Font.BOLD, 16));
+		cancel.setFocusPainted(false);
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -61,8 +68,11 @@ public class ChangePassword implements Operation {
 			}
 		});
 		panel.add(cancel);
-		
-		JButton confirm = new JButton("Confirm", 22);
+
+		JButton confirm = new JButton("Confirm");
+		confirm.setBackground(new Color(39, 174, 96));
+		confirm.setForeground(Color.WHITE);
+		confirm.setFont(new Font("Arial", Font.BOLD, 16));
 		confirm.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -88,25 +98,31 @@ public class ChangePassword implements Operation {
 					JOptionPane.showMessageDialog(frame, "Password doesn't match");
 					return;
 				}
-				
+
 				try {
-				String update = "UPDATE `users` SET "
-						+ "`Password`='"+newPassword.getText()+"' WHERE `ID` = '"+user.getID()+"';";
-				database.getStatement().execute(update);
-				JOptionPane.showMessageDialog(frame, "Password changed successfully");
-				user.setPassword(newPassword.getText());
-				frame.dispose();
+					String update = "UPDATE `users` SET "
+							+ "`Password`='" + newPassword.getText() + "' WHERE `ID` = '" + user.getID() + "';";
+					database.getStatement().execute(update);
+					JOptionPane.showMessageDialog(frame, "Password changed successfully");
+					user.setPassword(newPassword.getText());
+					frame.dispose();
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage());
 				}
-				
+
 			}
 		});
 		panel.add(confirm);
-		
+
 		frame.add(panel, BorderLayout.CENTER);
 		frame.setVisible(true);
-		
+
 	}
 
+	private JLabel createLabel(String text) {
+		JLabel label = new JLabel(text);
+		label.setForeground(new Color(44, 62, 80));
+		label.setFont(new Font("Arial", Font.BOLD, 18));
+		return label;
+	}
 }

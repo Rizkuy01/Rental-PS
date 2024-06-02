@@ -10,18 +10,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 
-import Model.ps;
 import Model.Database;
-import Model.JButton;
-import Model.JLabel;
-import Model.JTextField;
 import Model.Operation;
 import Model.Rent;
 import Model.User;
+import Model.ps;
+import Model.JTextField;
 
 public class Rentps implements Operation {
 
@@ -37,18 +38,21 @@ public class Rentps implements Operation {
 		frame = new JFrame("Booking PS");
 		frame.setSize(600, 650);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.getContentPane().setBackground(new Color(236, 240, 241));
 		frame.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel("Booking PS", 35);
-		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		JPanel header = new JPanel(new BorderLayout());
+		header.setBackground(new Color(44, 62, 80));
+		JLabel title = new JLabel("Booking PS", JLabel.CENTER);
+		title.setFont(title.getFont().deriveFont(35f));
+		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 		frame.add(title, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel(new GridLayout(8, 2, 15, 15));
 		panel.setBackground(null);
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-		panel.add(new JLabel("ID:", 22));
+		addStyledLabel(panel, "ID:");
 
 		String[] ids = new String[] { " " };
 		ArrayList<Integer> idsArray = new ArrayList<>();
@@ -70,7 +74,7 @@ public class Rentps implements Operation {
 			ids[i] = String.valueOf(idsArray.get(i - 1));
 		}
 
-		Model.JComboBox id = new Model.JComboBox(ids, 22);
+		JComboBox<String> id = new JComboBox<>(ids);
 		id.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -79,42 +83,37 @@ public class Rentps implements Operation {
 		});
 		panel.add(id);
 
-		panel.add(new JLabel("Brand:", 22));
+		addStyledLabel(panel, "Brand:");
 
 		brand = new JTextField(22);
-		brand.setEditable(false);
 		panel.add(brand);
 
-		panel.add(new JLabel("Model:", 22));
+		addStyledLabel(panel, "Model:");
 
 		model = new JTextField(22);
-		model.setEditable(false);
 		panel.add(model);
 
-		panel.add(new JLabel("Color:", 22));
+		addStyledLabel(panel, "Color:");
 
 		color = new JTextField(22);
-		color.setEditable(false);
 		panel.add(color);
 
-		panel.add(new JLabel("Year:", 22));
+		addStyledLabel(panel, "Year:");
 
 		year = new JTextField(22);
-		year.setEditable(false);
 		panel.add(year);
 
-		panel.add(new JLabel("Price per Hour:", 22));
+		addStyledLabel(panel, "Price per Hour:");
 
 		price = new JTextField(22);
-		price.setEditable(false);
 		panel.add(price);
 
-		panel.add(new JLabel("Hours:", 22));
+		addStyledLabel(panel, "Hours:");
 
 		JTextField hours = new JTextField(22);
 		panel.add(hours);
 
-		JButton showpss = new JButton("Cek PS", 22);
+		JButton showpss = new JButton("Cek PS");
 		showpss.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -123,7 +122,7 @@ public class Rentps implements Operation {
 		});
 		panel.add(showpss);
 
-		JButton confirm = new JButton("Confirm", 22);
+		JButton confirm = new JButton("Confirm");
 		confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,6 +190,14 @@ public class Rentps implements Operation {
 		frame.requestFocus();
 	}
 
+	private void addStyledLabel(JPanel panel, String text) {
+		JLabel label = new JLabel(text);
+		label.setFont(label.getFont().deriveFont(18f));
+		label.setForeground(new Color(44, 62, 80));
+		label.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+		panel.add(label);
+	}
+
 	private void updateData(String ID) {
 		if (ID.equals(" ")) {
 			brand.setText("");
@@ -216,5 +223,4 @@ public class Rentps implements Operation {
 			}
 		}
 	}
-
 }

@@ -30,7 +30,7 @@ public class Returnps implements Operation {
 		JFrame frame = new JFrame("Finish Play");
 		frame.setSize(600, 260);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.getContentPane().setBackground(new Color(236, 240, 241));
 		frame.setLayout(new BorderLayout());
 
 		JLabel title = new JLabel("Rental PS GDA", 35);

@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.ChangePassword;
@@ -28,12 +30,12 @@ public class Client extends User {
 			new ChangePassword() };
 
 	private JButton[] btns = new JButton[] {
-			new JButton("View Schedule", 22),
-			new JButton("Start Play", 22),
-			new JButton("Return", 22),
-			new JButton("Show My Schedule", 22),
-			new JButton("Edit My Data", 22),
-			new JButton("Change Password", 22)
+			new JButton("View Schedule"),
+			new JButton("Start Play"),
+			new JButton("Return"),
+			new JButton("Show My Schedule"),
+			new JButton("Edit My Data"),
+			new JButton("Change Password")
 	};
 
 	public Client() {
@@ -46,10 +48,11 @@ public class Client extends User {
 		JFrame frame = new JFrame("Client Panel");
 		frame.setSize(400, btns.length * 90);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.getContentPane().setBackground(new Color(236, 240, 241));
 		frame.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel("Welcome " + getFirstName(), 30);
+		JLabel title = new JLabel("Welcome " + getFirstName(), JLabel.CENTER);
+		title.setFont(title.getFont().deriveFont(30f));
 		title.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 		frame.add(title, BorderLayout.NORTH);
 
@@ -61,6 +64,8 @@ public class Client extends User {
 			final int j = i;
 			JButton button = btns[i];
 			panel.add(button);
+			button.setBackground(new Color(41, 128, 185));
+			button.setForeground(Color.WHITE);
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {

@@ -36,11 +36,13 @@ public class ShowUserRents implements Operation {
 		JFrame frame = new JFrame("Rents");
 		frame.setSize(1200, 600);
 		frame.setLocationRelativeTo(f);
-		frame.getContentPane().setBackground(new Color(250, 206, 27));
+		frame.getContentPane().setBackground(new Color(236, 240, 241));
 		frame.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel("Rents", 35);
-		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		JLabel title = new JLabel("Rents", JLabel.CENTER);
+		title.setForeground(new Color(44, 62, 80));
+		title.setFont(title.getFont().deriveFont(35f));
+		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 		frame.add(title, BorderLayout.NORTH);
 
 		String[] header = new String[] {
@@ -122,5 +124,4 @@ public class ShowUserRents implements Operation {
 		frame.add(panel, BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
-
 }
