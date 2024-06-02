@@ -68,27 +68,39 @@ public class AddNewAccount implements Operation {
 		panel.setBackground(new Color(0, 0, 0, 0));
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-		panel.add(new JLabel("First Name:", 22));
+		JLabel firstNameLabel = new JLabel("First Name:", 22);
+		firstNameLabel.setForeground(Color.WHITE); // Mengatur warna teks label menjadi putih
+		panel.add(firstNameLabel);
 		JTextField firstName = new JTextField(22);
 		panel.add(firstName);
 
-		panel.add(new JLabel("Last Name:", 22));
+		JLabel lastNameLabel = new JLabel("Last Name:", 22);
+		lastNameLabel.setForeground(Color.WHITE);
+		panel.add(lastNameLabel);
 		JTextField lastName = new JTextField(22);
 		panel.add(lastName);
 
-		panel.add(new JLabel("Email:", 22));
+		JLabel emailLabel = new JLabel("Email:", 22);
+		emailLabel.setForeground(Color.WHITE);
+		panel.add(emailLabel);
 		JTextField email = new JTextField(22);
 		panel.add(email);
 
-		panel.add(new JLabel("Phone Number:", 22));
+		JLabel phoneNumberLabel = new JLabel("Phone Number:", 22);
+		phoneNumberLabel.setForeground(Color.WHITE);
+		panel.add(phoneNumberLabel);
 		JTextField phoneNumber = new JTextField(22);
 		panel.add(phoneNumber);
 
-		panel.add(new JLabel("Password:", 22));
+		JLabel passwordLabel = new JLabel("Password:", 22);
+		passwordLabel.setForeground(Color.WHITE);
+		panel.add(passwordLabel);
 		JPasswordField password = new JPasswordField(22);
 		panel.add(password);
 
-		panel.add(new JLabel("Confirm Password:", 22));
+		JLabel confirmPasswordLabel = new JLabel("Confirm Password:", 22);
+		confirmPasswordLabel.setForeground(Color.WHITE);
+		panel.add(confirmPasswordLabel);
 		JPasswordField confirmPassword = new JPasswordField(22);
 		panel.add(confirmPassword);
 
