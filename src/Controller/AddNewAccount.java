@@ -50,8 +50,8 @@ public class AddNewAccount implements Operation {
 				Graphics2D g2d = (Graphics2D) g;
 				int width = getWidth();
 				int height = getHeight();
-				Color color1 = new Color(224, 255, 255);
-				Color color2 = new Color(0, 0, 255);
+				Color color1 = new Color(52, 73, 94);
+				Color color2 = new Color(44, 62, 80);
 				GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2);
 				g2d.setPaint(gp);
 				g2d.fillRect(0, 0, width, height);
@@ -60,7 +60,7 @@ public class AddNewAccount implements Operation {
 		gradientPanel.setLayout(new BorderLayout());
 
 		JLabel title = new JLabel("WELCOME TO RENTAL PS GDA", 35);
-		title.setForeground(Color.BLUE);
+		title.setForeground(Color.WHITE);
 		title.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		gradientPanel.add(title, BorderLayout.NORTH);
 
@@ -69,38 +69,32 @@ public class AddNewAccount implements Operation {
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 		panel.add(new JLabel("First Name:", 22));
-
 		JTextField firstName = new JTextField(22);
 		panel.add(firstName);
 
 		panel.add(new JLabel("Last Name:", 22));
-
 		JTextField lastName = new JTextField(22);
 		panel.add(lastName);
 
 		panel.add(new JLabel("Email:", 22));
-
 		JTextField email = new JTextField(22);
 		panel.add(email);
 
 		panel.add(new JLabel("Phone Number:", 22));
-
 		JTextField phoneNumber = new JTextField(22);
 		panel.add(phoneNumber);
 
 		panel.add(new JLabel("Password:", 22));
-
 		JPasswordField password = new JPasswordField(22);
 		panel.add(password);
 
 		panel.add(new JLabel("Confirm Password:", 22));
-
 		JPasswordField confirmPassword = new JPasswordField(22);
 		panel.add(confirmPassword);
 
 		JButton login = new JButton("Login", 22);
-		login.setBackground(Color.LIGHT_GRAY);
-		login.setForeground(Color.BLACK);
+		login.setBackground(new Color(41, 128, 185));
+		login.setForeground(Color.WHITE);
 		login.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -111,7 +105,7 @@ public class AddNewAccount implements Operation {
 		panel.add(login);
 
 		JButton createAcc = new JButton("Create Account", 22);
-		createAcc.setBackground(Color.GREEN);
+		createAcc.setBackground(new Color(41, 128, 185));
 		createAcc.setForeground(Color.WHITE);
 		createAcc.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
